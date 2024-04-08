@@ -1,28 +1,28 @@
 captainVersion: 4
 services:
-  $$cap_appname:
-    image: ronivay/xen-orchestra:$$cap_xen-orchestra_version
-    volumes:
-      - $$cap_appname-xo-data:/var/lib/xo-server
-      - $$cap_appname-redis-data:/var/lib/redis
-    restart: always
-    cap_add:
-      - SYS_ADMIN
-      - DAC_READ_SEARCH
-    caproverExtra:
-      websocketSupport: 'true'
+    $$cap_appname:
+        image: ronivay/xen-orchestra:$$cap_xen-orchestra_version
+        volumes:
+            - $$cap_appname-xo-data:/var/lib/xo-server
+            - $$cap_appname-redis-data:/var/lib/redis
+        restart: always
+        cap_add:
+            - SYS_ADMIN
+            - DAC_READ_SEARCH
+        caproverExtra:
+            websocketSupport: 'true'
 caproverOneClickApp:
-  variables:
-    - id: $$cap_xen-orchestra_version
-      label: version
-      defaultValue: latest
-      description: Check out their Docker page for the valid tags https://hub.docker.com/r/ronivay/xen-orchestra/tags
-      validRegex: /^([^\s^\/])+$/
+    variables:
+        - id: $$cap_xen-orchestra_version
+          label: version
+          defaultValue: latest
+          description: Check out their Docker page for the valid tags https://hub.docker.com/r/ronivay/xen-orchestra/tags
+          validRegex: /^([^\s^\/])+$/
 
-  instructions:
-    start: Turnkey solution for XenServer and XCP-ng.
-    end: Congratulations! You have the new Xen-Orchestra instance running. Please make sure to enable the websocket too
-  displayName: 'xen-orchestra'
-  isOfficial: false
-  description: Turnkey solution for XenServer and XCP-ng
-  documentation: Taken from https://hub.docker.com/r/ronivay/xen-orchestra
+    instructions:
+        start: Turnkey solution for XenServer and XCP-ng.
+        end: Congratulations! You have the new Xen-Orchestra instance running. Please make sure to enable the websocket too
+    displayName: 'xen-orchestra'
+    isOfficial: false
+    description: Turnkey solution for XenServer and XCP-ng
+    documentation: Taken from https://hub.docker.com/r/ronivay/xen-orchestra
