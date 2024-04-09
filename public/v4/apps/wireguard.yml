@@ -7,30 +7,23 @@ services:
         restart: always
         cap_add:
             - NET_ADMIN
-    $$cap_appname-wireguard-ui:
-        image: ngoduykhanh/wireguard-ui:latest
-        depends_on:
-            - $$cap_appname
-        cap_add:
-            - NET_ADMIN
-        network_mode: service:wireguard
-        environment:
-            - SENDGRID_API_KEY
-            - EMAIL_FROM_ADDRESS
-            - EMAIL_FROM_NAME
-            - SESSION_SECRET
-            - WGUI_USERNAME=admin
-            - WGUI_PASSWORD=password
-            - WG_CONF_TEMPLATE
-            - WGUI_MANAGE_START=true
-            - WGUI_MANAGE_RESTART=true
-        logging:
-            driver: json-file
-            options:
-                max-size: 50m
-        volumes:
-            - $$cap_appname-ui-db:/app/db
-            - $$cap_appname-ui:/etc/wireguard
+#    $$cap_appname-wireguard-ui:
+#        image: ngoduykhanh/wireguard-ui:latest
+#        cap_add:
+#            - NET_ADMIN
+#        environment:
+#            - SENDGRID_API_KEY
+#            - EMAIL_FROM_ADDRESS
+#            - EMAIL_FROM_NAME
+#            - SESSION_SECRET
+#            - WGUI_USERNAME=admin
+#            - WGUI_PASSWORD=password
+#            - WG_CONF_TEMPLATE
+#            - WGUI_MANAGE_START=true
+#            - WGUI_MANAGE_RESTART=true
+#        volumes:
+#            - $$cap_appname-ui-db:/app/db
+#            - $$cap_appname-ui:/etc/wireguard
 caproverOneClickApp:
     variables:
         - id: $$cap_version
@@ -42,7 +35,7 @@ caproverOneClickApp:
     instructions:
         start: WireGuard® is an extremely simple yet fast and modern VPN that utilizes state-of-the-art cryptography.
         end: Congratulations! You have the new Wireguard instance running.
-    displayName: 'wire-guard'
+    displayName: 'Wireguard'
     isOfficial: false
     description: WireGuard® is an extremely simple yet fast and modern VPN that utilizes state-of-the-art cryptography.
     documentation: Taken from https://hub.docker.com/r/linuxserver/wireguard
