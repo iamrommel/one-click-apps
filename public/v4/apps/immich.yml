@@ -38,17 +38,17 @@ services:
     $$cap_appname-redis:
         caproverExtra:
             notExposeAsWebApp: 'true'
-        image: redis:$$cap_redis_ver
+        image: docker.io/redis:6.2-alpine@sha256:148bb5411c184abd288d9aaed139c98123eeb8824c5d3fce03cf721db58066d8
 
     $$cap_appname-db:
         caproverExtra:
             notExposeAsWebApp: 'true'
-        image: tensorchord/pgvecto-rs:$$cap_app_db_ver
+        image: docker.io/tensorchord/pgvecto-rs:pg14-v0.2.0@sha256:739cdd626151ff1f796dc95a6591b55a714f341c737e27f045019ceabf8e8c52
         environment:
             POSTGRES_PASSWORD: $$cap_app_db_pass
             POSTGRES_USER: $$cap_app_db_user
             POSTGRES_DB: $$cap_app_db_name
-            PG_DATA: /var/lib/postgresql/data
+            POSTGRES_INITDB_ARGS: '--data-checksums'
         volumes:
             - $$cap_appname-db-data:/var/lib/postgresql/data
 
@@ -67,11 +67,7 @@ caproverOneClickApp:
         - label: Immich version
           id: $$cap_version
           description: Check out their valid tags at https://github.com/immich-app/immich/releases
-          defaultValue: v1.108.0
-        - label: Immich redis version
-          id: $$cap_redis_ver
-          defaultValue: 6.2-alpine@sha256:c5a607fb6e1bb15d32bbcf14db22787d19e428d59e31a5da67511b49bb0f1ccc
-          description: Check out their valid tags at https://hub.docker.com/_/redis/tags
+          defaultValue: v1.129.0
         - label: Database password
           id: $$cap_app_db_pass
           description: Password for accessing the database. A random one has been generated for you.
@@ -84,10 +80,6 @@ caproverOneClickApp:
           id: $$cap_app_db_name
           description: A name for the database used by Immich
           defaultValue: 'immich'
-        - label: PostgreSQL database version
-          id: $$cap_app_db_ver
-          description: Immich uses PostgreSQL with the pgvecto.rs extension. Check the valid tags at https://hub.docker.com/r/tensorchord/pgvecto-rs/tags
-          defaultValue: pg14-v0.2.0@sha256:90724186f0a3517cf6914295b5ab410db9ce23190a2d9d0b9dd6463e3fa298f0
         - label: Upload directory
           id: $$cap_app_upload_location
           description: Full path to the directory where you plan to store all your files. It should be created beforehand. If you want caprover to create it for you just leave the default 'immich-data'
