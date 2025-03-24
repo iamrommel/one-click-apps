@@ -5,7 +5,7 @@ services:
         caproverExtra:
             dockerfileLines:
                 - FROM ghcr.io/immich-app/immich-server:$$cap_version
-            containerHttpPort: 3001
+            containerHttpPort: 2283
         environment:
             DB_PASSWORD: $$cap_app_db_pass
             DB_USERNAME: $$cap_app_db_user
