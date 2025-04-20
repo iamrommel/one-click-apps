@@ -1,0 +1,46 @@
+captainVersion: 4
+services:
+  $$cap_appname:
+    image: docker.io/grafana/otel-lgtm:$$cap_version
+    restart: always
+    volumes:
+      - $$cap_appname-data:/data
+    environment:
+      GF_PATHS_DATA: /data/grafana
+    ports:
+      - 4317:4317 # OTLP gRPC
+      - 4318:4318 # OTLP HTTP
+#      - 3000:3000
+    caproverExtra:
+      containerHttpPort: '3000'
+
+caproverOneClickApp:
+  variables:
+    - id: $$cap_version
+      label: LGTM Docker Tag
+      defaultValue: latest
+      description: 'Specify the Docker tag for grafana/otel-lgtm. Find tags on Docker Hub: https://hub.docker.com/r/grafana/otel-lgtm/tags'
+
+  instructions:
+    start: |
+      Grafana OTel LGTM (Loki, Grafana, Tempo, Mimir) Stack.
+      This stack bundles Grafana observability tools with an OpenTelemetry Collector.
+      Read more: https://github.com/grafana/otel-lgtm
+    end: |
+      The LGTM stack is starting!
+      Access the Grafana UI via the link provided by CapRover (it uses port 3000 internally). Default Grafana login is typically admin/admin unless changed via environment variables.
+      
+      OTLP Endpoint Information:
+      - OTLP gRPC: Use port 4317 on your CapRover node's public/private IP.
+      - OTLP HTTP: Use port 4318 on your CapRover node's public/private IP.
+        (Example HTTP endpoint for apps inside CapRover: http://srv-captain--$$cap_appname:4318)
+        (Example HTTP endpoint from outside CapRover: http://<your-caprover-ip>:4318 - requires firewall config)
+      
+      IMPORTANT: If your original docker-compose setup used an `.env` file, you MUST manually add those environment variables to this app via the CapRover UI in the 'App Configs' section.
+      
+      Data is persisted in the CapRover volume `$$cap_appname-data`.
+
+  displayName: Grafana OTel LGTM Stack
+  isOfficial: false # Set to true if this becomes an official CapRover app
+  description: Deploys the Grafana OTel LGTM stack (Loki, Grafana, Tempo, Mimir + OTel Collector) for observability.
+  documentation: https://github.com/grafana/otel-lgtm
